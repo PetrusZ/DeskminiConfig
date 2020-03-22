@@ -1,0 +1,6 @@
+/var/lib/znc/znc.pem
+/var/lib/configs/znc.conf
+
+perms.conf
+
+*.swp
