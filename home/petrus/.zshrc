@@ -21,7 +21,7 @@ antigen bundle docker
 antigen bundle extract
 antigen bundle encode64
 antigen bundle common-aliases
-# antigen bundle command-not-found
+antigen bundle command-not-found
 antigen bundle colored-man-pages
 antigen bundle sudo
 antigen bundle web-search

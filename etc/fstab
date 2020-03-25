@@ -1,13 +1,31 @@
 # /etc/fstab: static file system information.
 #
-# Use 'blkid' to print the universally unique identifier for a
-# device; this may be used with UUID= as a more robust way to name devices
-# that works even if disks are added and removed. See fstab(5).
+# noatime turns off atimes for increased performance (atimes normally aren't 
+# needed); notail increases performance of ReiserFS (at the expense of storage 
+# efficiency).  It's safe to drop the noatime options if you want and to 
+# switch between notail / tail freely.
 #
-# <file system> <mount point>   <type>  <options>       <dump>  <pass>
-# / was on /dev/nvme0n1p2 during installation
-UUID=470c1403-847d-4fd6-8532-301ecff97b47 	/               	ext4    noatime,user_xattr,discard,errors=remount-ro 0       1
-# /boot/efi was on /dev/nvme0n1p1 during installation
-UUID=DE9B-A13D  				/boot/efi       	vfat   	discard,umask=0077      0       1
-UUID=de133798-5768-4073-961f-0118c93fb05a  	/home/petrus/data 	ext4 	noatime 		0 	1
-/swapfile 					none 			swap 	defaults 		0 	0
+# The root filesystem should have a pass number of either 0 or 1.
+# All other filesystems should have a pass number of 0 or greater than 1.
+#
+# See the manpage fstab(5) for more information.
+#
+
+# <fs>			<mountpoint>	<type>		<opts>		<dump/pass>
+
+# NOTE: If your BOOT partition is ReiserFS, add the notail option to opts.
+#
+# NOTE: Even though we list ext4 as the type here, it will work with ext2/ext3
+#       filesystems.  This just tells the kernel to use the ext4 driver.
+#
+# NOTE: You can use full paths to devices like /dev/sda3, but it is often
+#       more reliable to use filesystem labels or UUIDs. See your filesystem
+#       documentation for details on setting a label. To obtain the UUID, use
+#       the blkid(8) command.
+# /dev/nvme0n1p1 
+UUID=5966-6770 					/boot 		vfat 	defaults,noatime,discard 	0 2
+# /dev/nvme0n1p2 
+UUID=ff0139b4-5b9d-4721-a956-ace26d1b3d18 	/ 		ext4 	noatime,user_xattr,discard 	0 1
+# /dev/sda1 
+UUID=de133798-5768-4073-961f-0118c93fb05a	/srv/data	ext4 	noatime				0 1
+/swapfile 					none 		swap 	defaults 			0 0
