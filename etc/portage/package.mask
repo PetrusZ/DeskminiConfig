@@ -7,5 +7,6 @@ x11-wm/i3-gaps::gig
 dev-go/go-md2man::go-overlay
 media-libs/libuninameslist::4nykey
 media-gfx/fontforge::4nykey
+www-servers/nginx::mva
 #media-fonts/source-han-sans::4nykey
 #>sys-kernel/gentoo-sources-4.15.2

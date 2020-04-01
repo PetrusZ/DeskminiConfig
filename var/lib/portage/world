@@ -29,6 +29,7 @@ app-shells/zsh-completions
 app-text/dos2unix
 app-text/tree
 app-text/wgetpaste
+app-vim/nginx-syntax
 dev-python/pip
 dev-util/ccache
 dev-vcs/git
@@ -36,7 +37,6 @@ mail-mta/postfix
 media-fonts/fontawesome
 media-fonts/hack
 media-fonts/noto
-media-fonts/noto-emoji-bin
 media-fonts/powerline-symbols
 media-fonts/source-han-sans
 media-sound/alsa-utils
@@ -47,6 +47,8 @@ net-analyzer/tcpdump
 net-analyzer/tcptraceroute
 net-analyzer/traceroute
 net-dns/bind-tools
+net-fs/nfs-utils
+net-fs/samba
 net-irc/znc
 net-misc/aria2
 net-misc/networkmanager
@@ -62,9 +64,10 @@ sys-apps/usbutils
 sys-boot/grub:2
 sys-devel/gcc
 sys-kernel/genkernel
-sys-kernel/gentoo-sources
+sys-kernel/gentoo-kernel-bin
 sys-power/acpi
 sys-power/cpupower
 sys-power/suspend
 sys-process/htop
 sys-process/lsof
+www-servers/nginx
