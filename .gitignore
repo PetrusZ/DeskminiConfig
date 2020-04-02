@@ -1,5 +1,7 @@
-/var/lib/znc/znc.pem
-/var/lib/configs/znc.conf
+var/lib/znc/znc.pem
+var/lib/configs/znc.conf
+srv/data/www/localhost/htdocs/nextcloud/config/config.php
+etc/letsencrypt/cloudflare.ini
 
 perms.conf
 

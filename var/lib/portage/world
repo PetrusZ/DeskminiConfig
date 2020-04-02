@@ -6,6 +6,8 @@ app-admin/sysstat
 app-arch/p7zip
 app-arch/rar
 app-benchmarks/sysbench
+app-crypt/certbot
+app-crypt/certbot-dns-cloudflare
 app-editors/vim
 app-emulation/docker
 app-emulation/docker-compose
@@ -30,6 +32,11 @@ app-text/dos2unix
 app-text/tree
 app-text/wgetpaste
 app-vim/nginx-syntax
+dev-db/mariadb
+dev-db/mycli
+dev-db/redis
+dev-lang/php
+dev-php/pecl-redis
 dev-python/pip
 dev-util/ccache
 dev-vcs/git
@@ -70,4 +77,5 @@ sys-power/cpupower
 sys-power/suspend
 sys-process/htop
 sys-process/lsof
+www-apps/nextcloud
 www-servers/nginx

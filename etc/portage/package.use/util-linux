@@ -113,3 +113,12 @@ sys-apps/util-linux static-libs
 # required by net-p2p/qbittorrent-4.2.1::gentoo
 # required by qbittorrent (argument)
 >=dev-libs/libpcre2-10.34 pcre16
+# required by dev-lang/php-7.4.4::gentoo
+# required by php (argument)
+>=app-eselect/eselect-php-0.9.6 fpm
+# required by certbot-dns-cloudflare (argument)
+>=app-crypt/certbot-dns-cloudflare-1.2.0 -python_targets_python2_7
+# required by dev-php/pecl-imagick-3.4.4::gentoo
+# required by www-apps/nextcloud-18.0.3::gentoo[imagemagick]
+# required by nextcloud (argument)
+>=media-gfx/imagemagick-7.0.10.3 -openmp
