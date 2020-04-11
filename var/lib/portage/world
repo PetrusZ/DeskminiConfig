@@ -1,6 +1,7 @@
 app-admin/eclean-kernel
 app-admin/logrotate
 app-admin/sudo
+app-admin/supervisor
 app-admin/syslog-ng
 app-admin/sysstat
 app-arch/p7zip
@@ -11,9 +12,11 @@ app-crypt/certbot-dns-cloudflare
 app-editors/vim
 app-emulation/docker
 app-emulation/docker-compose
+app-emulation/libvirt
 app-eselect/eselect-repository
 app-misc/colordiff
 app-misc/neofetch
+app-misc/radeontop
 app-portage/cpuid2cpuflags
 app-portage/eix
 app-portage/elogv
@@ -47,6 +50,7 @@ media-fonts/noto
 media-fonts/powerline-symbols
 media-fonts/source-han-sans
 media-sound/alsa-utils
+media-tv/plex-media-server
 net-analyzer/mtr
 net-analyzer/nmap
 net-analyzer/openbsd-netcat
@@ -58,15 +62,18 @@ net-fs/nfs-utils
 net-fs/samba
 net-irc/znc
 net-misc/aria2
+net-misc/bridge-utils
 net-misc/networkmanager
 net-misc/proxychains
 net-p2p/qbittorrent
+net-proxy/privoxy
 net-wireless/iw
 sci-mathematics/calc
 sys-apps/dmidecode
 sys-apps/lm-sensors
 sys-apps/portage
 sys-apps/smartmontools
+sys-apps/the_silver_searcher
 sys-apps/usbutils
 sys-boot/grub:2
 sys-devel/gcc
@@ -75,6 +82,7 @@ sys-kernel/gentoo-kernel-bin
 sys-power/acpi
 sys-power/cpupower
 sys-power/suspend
+sys-process/glances
 sys-process/htop
 sys-process/lsof
 www-apps/nextcloud

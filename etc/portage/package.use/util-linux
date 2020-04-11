@@ -122,3 +122,12 @@ sys-apps/util-linux static-libs
 # required by www-apps/nextcloud-18.0.3::gentoo[imagemagick]
 # required by nextcloud (argument)
 >=media-gfx/imagemagick-7.0.10.3 -openmp
+# required by app-emulation/libvirt-6.1.0::gentoo[virt-network]
+# required by @selected
+# required by @world (argument)
+>=net-dns/dnsmasq-2.80-r1 script
+# required by sys-auth/polkit-0.116-r1::gentoo[systemd]
+# required by app-emulation/libvirt-6.1.0::gentoo[policykit]
+# required by @selected
+# required by @world (argument)
+>=sys-apps/systemd-245 policykit
