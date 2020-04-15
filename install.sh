@@ -77,6 +77,7 @@ docker run -d \
   -v /srv/data/poste.io:/data \
   --name "mailserver" \
   -h "codeplayer.org" \
+  --restart always \
   analogic/poste.io
 
 docker run \
@@ -102,6 +103,7 @@ docker run \
   -v /srv/data/plex/transcode:/transcode \
   -v /srv/data/nas:/data \
   --device /dev/dri:/dev/dri \
+  --restart always \
   plexinc/pms-docker
 
 docker run -d \
@@ -114,8 +116,9 @@ docker run -d \
     --env UID=1000 \
     --env GID=100 \
     --env GIDLIST=27,28,100 \
+    --restart always \
     emby/embyserver:latest
 
-docker run -it -d --name=xteve -p 34400:34400 -v /srv/data/xteve:/home/xteve/.xteve bl0m1/xtevedocker:latest
+docker run -it -d --name=xteve -p 34400:34400 -v /srv/data/xteve:/home/xteve/.xteve  --restart always bl0m1/xtevedocker:latest
 
 sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org
