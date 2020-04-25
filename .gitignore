@@ -2,6 +2,7 @@ var/lib/znc/.znc/znc.pem
 var/lib/znc/.znc/configs/znc.conf
 srv/data/www/localhost/htdocs/nextcloud/config/config.php
 etc/letsencrypt/cloudflare.ini
+etc/ssh/sshd_config
 
 perms.conf
 

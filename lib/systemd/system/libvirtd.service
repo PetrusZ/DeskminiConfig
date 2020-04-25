@@ -2,7 +2,6 @@
 Description=Virtualization daemon
 Requires=virtlogd.socket
 Requires=virtlockd.socket
-Requires=libvirtd-tcp.socket
 # Use Wants instead of Requires so that users
 # can disable these three .socket units to revert
 # to a traditional non-activation deployment setup

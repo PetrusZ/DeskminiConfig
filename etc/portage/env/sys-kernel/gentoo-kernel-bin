@@ -1,0 +1,3 @@
+post_pkg_postinst() {
+    eclean-kernel -n 2
+}
