@@ -41,6 +41,14 @@ sudo systemctl enable plex-media-server.service
 sudo systemctl enable libvirtd.service
 sudo systemctl enable libvirt-guests.service
 
+# zfs
+sudo systemctl enable zfs.target
+sudo systemctl enable zfs-import-cache
+sudo systemctl enable zfs-mount
+sudo systemctl enable zfs-import.target
+
+zgenhostid
+
 # docker
 # unused
 docker run -d --name gitea -e USER_UID=1000 -e USER_GID=1000 -e DB_TYPE=mysql -e DB_HOST=$(ip route show | grep docker0 | awk '{print $9}'):3306 -e DB_NAME=gitea -e DB_USER=gitea -e DB_PASSWD= -p 3000:3000 -p 3022:22 -v /srv/data/gitea:/data -v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro --restart always gitea/gitea:lates
