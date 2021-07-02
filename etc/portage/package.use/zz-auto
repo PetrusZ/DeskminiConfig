@@ -1,0 +1,40 @@
+# required by dev-php/pecl-imagick-3.5.0::gentoo
+# required by www-apps/nextcloud-21.0.2::gentoo[imagemagick]
+# required by @selected
+# required by @world (argument)
+>=media-gfx/imagemagick-7.1.0.2 -openmp
+# required by dev-lang/php-8.0.7::gentoo
+# required by virtual/httpd-php-8.0::gentoo
+# required by www-apps/nextcloud-21.0.2::gentoo
+# required by @selected
+# required by @world (argument)
+>=app-eselect/eselect-php-0.9.7 fpm
+# required by sys-power/suspend-1.0_p20200924::gentoo[crypt]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libgcrypt-1.9.3 static-libs
+# required by sys-power/suspend-1.0_p20200924::gentoo[crypt]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libgpg-error-1.42 static-libs
+# required by sys-power/suspend-1.0_p20200924::gentoo[lzo]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/lzo-2.10 static-libs
+# required by net-misc/networkmanager-1.30.4::gentoo[wifi,-iwd]
+# required by @selected
+# required by @world (argument)
+>=net-wireless/wpa_supplicant-2.9-r5 dbus
+# required by app-portage/pfl-3.1-r1::gentoo[network-cron]
+# required by @selected
+# required by @world (argument)
+>=sys-apps/util-linux-2.37 caps
+# required by app-emulation/libvirt-7.4.0::gentoo[virt-network]
+# required by @selected
+# required by @world (argument)
+>=net-dns/dnsmasq-2.85 script
+# required by sys-auth/polkit-0.119-r2::gentoo[systemd]
+# required by app-emulation/libvirt-7.4.0::gentoo[policykit]
+# required by @selected
+# required by @world (argument)
+>=sys-apps/systemd-248.3-r1 policykit

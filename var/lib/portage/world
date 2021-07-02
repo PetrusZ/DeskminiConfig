@@ -75,6 +75,7 @@ sys-apps/the_silver_searcher
 sys-apps/usbutils
 sys-boot/grub:2
 sys-devel/gcc
+sys-fs/zfs
 sys-kernel/genkernel
 sys-kernel/gentoo-kernel-bin
 sys-power/acpi
@@ -82,6 +83,7 @@ sys-power/cpupower
 sys-power/suspend
 sys-process/glances
 sys-process/htop
+sys-process/iotop
 sys-process/lsof
 www-apps/nextcloud
 www-servers/nginx

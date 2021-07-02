@@ -32,7 +32,9 @@ x11-terms/gnome-terminal -gnome-shell -nautilus
 sys-apps/systemd cgroup-hybrid sys-apps/portage rsync-verify
 sys-boot/woeusb minimal
 sys-kernel/gentoo-sources experimental symlink
-www-apps/nextcloud mysql -sqlite -vhosts
+sys-fs/zfs dist-kernel
+sys-fs/zfs-kmod dist-kernel
+www-apps/nextcloud mysql -sqlite vhosts
 www-client/chromium widevine jumbo-build -gnome-keyring
 www-client/uget aria2
 media-libs/harfbuzz icu

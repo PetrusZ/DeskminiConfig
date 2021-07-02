@@ -42,27 +42,35 @@ sudo systemctl enable libvirtd.service
 sudo systemctl enable libvirt-guests.service
 
 # docker
-docker run -p6801:80 -eARIA_SECRET=06ffa48448af4996b3da7c1df48f --name ariang -d --restart always remyj38/ariang:nginx16-alpine
-docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /home/petrus/portainer_data:/data portainer/portainer
-docker run --name myadmin -d -e PMA_HOST=$(ip route show | grep docker0 | awk '{print $9}') -e PMA_PORT=3306 -p 8081:80 --restart always phpmyadmin/phpmyadmin
+# unused
 docker run -d --name gitea -e USER_UID=1000 -e USER_GID=1000 -e DB_TYPE=mysql -e DB_HOST=$(ip route show | grep docker0 | awk '{print $9}'):3306 -e DB_NAME=gitea -e DB_USER=gitea -e DB_PASSWD= -p 3000:3000 -p 3022:22 -v /srv/data/gitea:/data -v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro --restart always gitea/gitea:lates
 docker run -d --name webvirtcloud -p 80:80 -p 6080:6080  --label com.centurylinklabs.watchtower.enable=false --restart always retspen/webvirtcloud:1
+docker run -d --name=xteve -p 34400:34400 -v /srv/data/xteve:/home/xteve/.xteve  --restart always bl0m1/xtevedocker:latest
+
+docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /srv/data/config/portainer:/data portainer/portainer
+
+docker run --name myadmin -d -e PMA_HOST=$(ip route show | grep docker0 | awk '{print $9}') -e PMA_PORT=3306 -p 8081:80 --restart always phpmyadmin/phpmyadmin
 
 docker run -d \
-  --name watchtower \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -e TZ=Asia/Shanghai \
-  -e WATCHTOWER_NOTIFICATIONS=email \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_FROM=watchtower@codeplayer.org \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_TO=silencly07@gmail.com \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER=smtp.yandex.com \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=25 \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=watchtower@codeplayer.org \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD= \
-  -e WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2 \
-  --restart always \
-  containrrr/watchtower --cleanup --schedule "0 0 3 * * *" \
-  $(cat ~/.watchtower.list)
+    --name aria2-pro \
+    --restart unless-stopped \
+    --log-opt max-size=1m \
+    --network host \
+    -e PUID=$UID \
+    -e PGID=$GID \
+    -e RPC_SECRET=06ffa48448af4996b3da7c1df48f \
+    -e RPC_PORT=6800 \
+    -e LISTEN_PORT=6888 \
+    -v /srv/data/config/aria2:/config \
+    -v /srv/data/nas/downloads/aria2:/downloads \
+    p3terx/aria2-pro
+
+docker run -d \
+    --name ariang \
+    --restart unless-stopped \
+    --log-opt max-size=1m \
+    -p 6880:6880 \
+    p3terx/ariang
 
 docker run -d \
   -p 25:25 \
@@ -94,8 +102,8 @@ docker run \
   -p 32414:32414/udp \
   -e TZ="Asia/Shanghai" \
   -e PLEX_CLAIM="" \
-  -e ADVERTISE_IP="http://192.168.2.71:32400/" \
-  -e ALLOWED_NETWORKS="192.168.2.0/24" \
+  -e ADVERTISE_IP="http://192.168.3.10:32400/" \
+  -e ALLOWED_NETWORKS="192.168.3.0/24" \
   -e PLEX_UID=1000 \
   -e PLEX_GID=1000 \
   -h PlexServer \
@@ -119,6 +127,20 @@ docker run -d \
     --restart always \
     emby/embyserver:latest
 
-docker run -d --name=xteve -p 34400:34400 -v /srv/data/xteve:/home/xteve/.xteve  --restart always bl0m1/xtevedocker:latest
+docker run -d \
+  --name watchtower \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e TZ=Asia/Shanghai \
+  -e WATCHTOWER_NOTIFICATIONS=email \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_FROM=watchtower@codeplayer.org \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_TO=silencly07@gmail.com \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER=smtp.yandex.com \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=25 \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=watchtower@codeplayer.org \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD= \
+  -e WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2 \
+  --restart always \
+  containrrr/watchtower --cleanup --schedule "0 0 3 * * *" \
+  $(cat ~/.watchtower.list)
 
 sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org

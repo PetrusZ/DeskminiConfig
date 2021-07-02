@@ -23,9 +23,7 @@
 #       documentation for details on setting a label. To obtain the UUID, use
 #       the blkid(8) command.
 # /dev/nvme0n1p1 
-UUID=5966-6770 					/boot 		vfat 	defaults,noatime,discard 	0 2
+UUID=9110-0C34 					/boot 		vfat 	defaults,noatime,discard 	0 2
 # /dev/nvme0n1p2 
-UUID=ff0139b4-5b9d-4721-a956-ace26d1b3d18 	/ 		ext4 	noatime,user_xattr,discard 	0 1
-# /dev/sda1 
-UUID=de133798-5768-4073-961f-0118c93fb05a	/srv/data	ext4 	noatime				0 1
+UUID=68b39212-602a-48ce-be43-b8fca02bc854 	/ 		ext4 	noatime,user_xattr,discard 	0 1
 /swapfile 					none 		swap 	defaults 			0 0
