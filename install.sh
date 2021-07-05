@@ -40,6 +40,7 @@ sudo systemctl enable redis.service
 sudo systemctl enable plex-media-server.service
 sudo systemctl enable libvirtd.service
 sudo systemctl enable libvirt-guests.service
+sudo systemctl enable smartd.service
 
 # zfs
 sudo systemctl enable zfs.target
