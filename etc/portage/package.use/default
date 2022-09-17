@@ -1,6 +1,7 @@
 app-arch/p7zip -wxwidgets
 app-arch/file-roller -nautilus -packagekit
 app-admin/conky vim-syntax
+app-admin/cockpit firewalld pcp udisks tuned -doc
 app-editors/emacs xft
 app-editors/vim python terminal cscope
 app-editors/gvim python terminal cscope
@@ -30,10 +31,12 @@ x11-misc/rofi windowmode
 x11-misc/dunst dunstify
 x11-terms/gnome-terminal -gnome-shell -nautilus
 sys-apps/systemd cgroup-hybrid sys-apps/portage rsync-verify
+sys-block/fio aio
 sys-boot/woeusb minimal
 sys-kernel/gentoo-sources experimental symlink
 sys-fs/zfs dist-kernel
 sys-fs/zfs-kmod dist-kernel
+sys-process/htop lm-sensors
 www-apps/nextcloud mysql -sqlite vhosts
 www-client/chromium widevine jumbo-build -gnome-keyring
 www-client/uget aria2

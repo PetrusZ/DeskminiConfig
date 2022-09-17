@@ -41,6 +41,8 @@ sudo systemctl enable plex-media-server.service
 sudo systemctl enable libvirtd.service
 sudo systemctl enable libvirt-guests.service
 sudo systemctl enable smartd.service
+sudo systemctl enable --now cockpit.socket
+sudo systemctl enable --now pmlogger.service
 
 # zfs
 sudo systemctl enable zfs.target
@@ -56,13 +58,13 @@ docker run -d --name gitea -e USER_UID=1000 -e USER_GID=1000 -e DB_TYPE=mysql -e
 docker run -d --name webvirtcloud -p 80:80 -p 6080:6080  --label com.centurylinklabs.watchtower.enable=false --restart always retspen/webvirtcloud:1
 docker run -d --name=xteve -p 34400:34400 -v /srv/data/xteve:/home/xteve/.xteve  --restart always bl0m1/xtevedocker:latest
 
-docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /srv/data/config/portainer:/data portainer/portainer
+docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /srv/data/config/portainer:/data portainer/portainer-ce
 
 docker run --name myadmin -d -e PMA_HOST=$(ip route show | grep docker0 | awk '{print $9}') -e PMA_PORT=3306 -p 8081:80 --restart always phpmyadmin/phpmyadmin
 
 docker run -d \
     --name aria2-pro \
-    --restart unless-stopped \
+    --restart always \
     --log-opt max-size=1m \
     --network host \
     -e PUID=$UID \
@@ -76,7 +78,7 @@ docker run -d \
 
 docker run -d \
     --name ariang \
-    --restart unless-stopped \
+    --restart always \
     --log-opt max-size=1m \
     -p 6880:6880 \
     p3terx/ariang
@@ -110,7 +112,7 @@ docker run \
   -p 32413:32413/udp \
   -p 32414:32414/udp \
   -e TZ="Asia/Shanghai" \
-  -e PLEX_CLAIM="" \
+  -e PLEX_CLAIM="claim-jf8Vndd6fhTqzz8ufWmC" \
   -e ADVERTISE_IP="http://192.168.3.10:32400/" \
   -e ALLOWED_NETWORKS="192.168.3.0/24" \
   -e PLEX_UID=1000 \
@@ -126,7 +128,7 @@ docker run \
 docker run -d \
     --name emby \
     --volume /srv/data/embyserver:/config \
-    --volume /srv/data/nas:/mnt/share1 \
+    --volume /srv/data/nas:/media \
     --device /dev/dri:/dev/dri \
     --publish 8096:8096 \
     --publish 8920:8920 \
@@ -135,6 +137,54 @@ docker run -d \
     --env GIDLIST=27,28,100 \
     --restart always \
     emby/embyserver:latest
+
+docker run -d \
+ --name jellyfin \
+ --user 1000:1000 \
+ -e TZ="Asia/Shanghai" \
+ -e JELLYFIN_PublishedServerUrl=192.168.3.10 \
+ -p 8096:8096 \
+ -p 8920:8920 \
+ -p 7359:7359/udp \
+ -p 1900:1900/udp \
+ -v /srv/data/jellyfin/config:/config \
+ -v /srv/data/jellyfin/cache:/cache \
+ -v /srv/data/nas:/data:ro \
+ --device /dev/dri:/dev/dri \
+ --net=host \
+ --restart=always \
+ jellyfin/jellyfin:unstable
+
+docker run -d \
+  --name elasticsearch \
+  -p 9200:9200 \
+  -p 9300:9300 \
+  #-e "discovery.type=single-node" \
+  -e ES_JAVA_OPTS="-Xms256m -Xmx2048m" \
+  -v /srv/data/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+  -v /srv/data/elasticsearch/data:/usr/share/elasticsearch/data \
+  #-v /srv/data/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+  --restart=always \
+  elasticsearch:7.16.3
+docker run -d --name kibana --link=elasticsearch:test -p 5601:5601 --restart=always kibana:7.16.3
+ 
+docker run -d --name=netdata \
+  -p 19999:19999 \
+  -v netdataconfig:/etc/netdata \
+  -v netdatalib:/var/lib/netdata \
+  -v netdatacache:/var/cache/netdata \
+  -v /etc/passwd:/host/etc/passwd:ro \
+  -v /etc/group:/host/etc/group:ro \
+  -v /proc:/host/proc:ro \
+  -v /sys:/host/sys:ro \
+  -v /etc/os-release:/host/etc/os-release:ro \
+  --hostname=deskmini \
+  --restart=always \
+  --cap-add SYS_PTRACE \
+  --security-opt apparmor=unconfined \
+  -e NETDATA_CLAIM_TOKEN= \
+  -e NETDATA_CLAIM_URL=https://app.netdata.cloud \
+  netdata/netdata
 
 docker run -d \
   --name watchtower \
@@ -149,7 +199,18 @@ docker run -d \
   -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD= \
   -e WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2 \
   --restart always \
-  containrrr/watchtower --cleanup --schedule "0 0 3 * * *" \
+  containrrr/watchtower:latest-dev --cleanup --schedule "0 0 3 * * *" \
   $(cat ~/.watchtower.list)
 
-sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org
+docker run -d \
+  --name postgres \
+  -p 5432:5432 \
+  -e POSTGRES_USER=root \
+  -e POSTGRES_PASSWORD="" \
+  -v /srv/data/postgres:/var/lib/postgresql/data \
+  --restart=always \
+  postgres:latest
+
+#sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org
+sudo acme.sh --issue --dns dns_cf -d *.codeplayer.org
+sudo acme.sh --install-cert -d codeplayer.org --key-file /etc/nginx/key.pem --fullchain-file /etc/nginx/fullchain.pem --reloadcmd "systemctl reload nginx"

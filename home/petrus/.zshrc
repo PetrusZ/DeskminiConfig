@@ -108,6 +108,8 @@ bindkey -M emacs '^N' history-substring-search-down
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+gpgconf --create-socketdir
 # -----------------------------------------------------------------------------"}}}
 
 #  < alias >{{{
@@ -135,7 +137,7 @@ alias ccache='CCACHE_DIR=/var/cache/ccache ccache'
 
 alias spacevim='vim -u ~/Project/SpaceVim/init.vim'
 
-alias yarn='yarn --cwd ~/.local'
+alias yarn_local='yarn --cwd ~/.local'
 
 alias glances='glances --enable-plugin connections,diskio,docker,cloud,floders,fs,ip,sensors,smart,wifi,system,quicklook,alert'
 

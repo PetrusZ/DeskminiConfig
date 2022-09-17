@@ -38,3 +38,53 @@
 # required by @selected
 # required by @world (argument)
 >=sys-apps/systemd-248.3-r1 policykit
+# required by sys-apps/cockpit-246::cockpit[networkmanager]
+# required by cockpit (argument)
+>=net-misc/networkmanager-1.30.4 policykit
+# required by sys-apps/cockpit-246::cockpit
+# required by cockpit (argument)
+>=net-libs/libssh-0.9.5 server
+# required by sys-apps/cockpit-246::cockpit[udisks]
+# required by @selected
+# required by @world (argument)
+>=sys-fs/udisks-2.9.2-r1 lvm
+# required by sys-fs/udisks-2.9.2-r1::gentoo
+# required by sys-apps/cockpit-246::cockpit[udisks]
+# required by @selected
+# required by @world (argument)
+>=sys-libs/libblockdev-2.25 lvm
+# required by net-firewall/firewalld-0.9.3-r1::gentoo[iptables,nftables]
+# required by sys-apps/cockpit-246::cockpit[firewalld,networkmanager]
+# required by @selected
+# required by @world (argument)
+>=net-firewall/nftables-0.9.9 python json xtables
+# required by net-firewall/firewalld-0.9.3-r1::gentoo[python_single_target_python3_9]
+# required by sys-apps/cockpit-246::cockpit[firewalld,networkmanager]
+# required by @selected
+# required by @world (argument)
+>=dev-python/python-slip-0.6.5-r1 dbus
+# required by app-emulation/cockpit-machines-245::cockpit
+# required by cockpit-machines (argument)
+>=app-emulation/libvirt-7.4.0 firewalld
+# required by app-emulation/cockpit-machines-245::cockpit
+# required by cockpit-machines (argument)
+>=app-emulation/virt-manager-3.2.0 policykit
+# required by dev-qt/qtgui-5.15.3::gentoo[-gles2-only]
+# required by dev-qt/qtsvg-5.15.3::gentoo
+# required by net-p2p/qbittorrent-4.4.2-r2::gentoo[gui]
+# required by @selected
+# required by @world (argument)
+>=media-libs/libglvnd-1.4.0 X
+# required by dev-qt/qtgui-5.15.3::gentoo[X]
+# required by dev-qt/qtsvg-5.15.3::gentoo
+# required by net-p2p/qbittorrent-4.4.2-r2::gentoo[gui]
+# required by @selected
+# required by @world (argument)
+>=x11-libs/libxkbcommon-1.4.0 X
+# required by media-sound/pulseaudio-daemon-15.99.1-r2::gentoo
+# required by media-sound/pulseaudio-15.99.1-r1::gentoo[daemon]
+# required by app-emulation/qemu-7.0.0-r1::gentoo[pulseaudio,-static]
+# required by app-emulation/libvirt-8.0.0-r2::gentoo[qemu]
+# required by @selected
+# required by @world (argument)
+>=media-libs/libpulse-15.99.1-r1 X
