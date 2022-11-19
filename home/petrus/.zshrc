@@ -1,50 +1,83 @@
 # vim: foldmethod=marker
-#  < antigen >{{{
-# -----------------------------------------------------------------------------
-if [[ ! -e ~/.antigen/antigen.zsh ]]; then
-    if [[ ! -d ~/.antigen ]]; then
-        mkdir -p ~/.antigen
-    fi
-    curl -L git.io/antigen > ~/.antigen/antigen.zsh
+#  < zinit >{{{
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
 fi
 
-source ~/.antigen/antigen.zsh
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
 
-# oh-my-zsh plugins
-# antigen bundle fd
-antigen bundle fzf
-antigen bundle git
-antigen bundle docker
-antigen bundle extract
-antigen bundle encode64
-antigen bundle common-aliases
-# antigen bundle command-not-found
-antigen bundle colored-man-pages
-antigen bundle sudo
-antigen bundle web-search
-antigen bundle taskwarrior
-antigen bundle z
+### End of Zinit's installer chunk
 
-# Other plugins
-# antigen bundle b4b4r07/enhancd
-antigen bundle Aloxaf/fzf-tab
-antigen bundle djui/alias-tips
-antigen bundle andrewferrier/fzf-z
-antigen bundle paulirish/git-open
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-history-substring-search
+# OMZ Lib
+zinit wait lucid for \
+    OMZL::bzr.zsh \
+    OMZL::cli.zsh \
+    OMZL::clipboard.zsh \
+    OMZL::compfix.zsh \
+    OMZL::completion.zsh \
+    OMZL::correction.zsh \
+    OMZL::directories.zsh \
+    OMZL::functions.zsh \
+    OMZL::git.zsh \
+    OMZL::grep.zsh \
+    OMZL::history.zsh \
+    OMZL::key-bindings.zsh \
+    OMZL::misc.zsh \
+    OMZL::prompt_info_functions.zsh \
+    OMZL::spectrum.zsh \
+    OMZL::termsupport.zsh \
+    OMZL::theme-and-appearance.zsh \
+    OMZL::vcs_info.zsh
 
 
-# Load the theme.
-antigen theme denysdovhan/spaceship-prompt
+# OMZ Plugin
+zinit wait lucid for \
+    OMZP::fzf \
+    OMZP::git \
+    OMZP::helm \
+    OMZP::docker \
+    OMZP::docker-compose \
+    OMZP::kubectl \
+    OMZP::extract \
+    OMZP::encode64 \
+    OMZP::common-aliases \
+    OMZP::colored-man-pages \
+    OMZP::sudo \
+    OMZP::web-search \
+    svn OMZP::macos \
+    svn OMZP::z
 
-# Tell Antigen that you're done.
-antigen apply
+# Others
+zinit wait lucid for \
+    atinit"zpcompinit; zpcdreplay" Aloxaf/fzf-tab \
+    djui/alias-tips \
+    andrewferrier/fzf-z \
+    paulirish/git-open \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-syntax-highlighting \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-history-substring-search
+
+# Load starship theme
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
 # -----------------------------------------------------------------------------"}}}
 
 #  < user config >{{{
@@ -54,27 +87,35 @@ antigen apply
 
 # User configuration
 if [[ $UID != 0 ]]; then
-    PATH_LOCAL="/home/petrus/.local/bin"
-    PATH_NODE_LOCAL="/home/petrus/.local/node_modules/.bin"
-    PATH_GO_LOCAL="/home/petrus/.local/go/bin"
+    PATH_LOCAL="/Users/petrus/.local/bin"
+    PATH_NODE_LOCAL="/Users/petrus/.local/node_modules/.bin"
+    PATH_GO_LOCAL="/Users/petrus/.local/go/bin"
+    PATH_PYTHON_LOCAL="/Users/petrus/Library/Python/3.10/bin/"
 fi
 PATH_DISTCC="/usr/lib/distcc/bin"
 PATH_DOOM="/home/petrus/.emacs.d/bin"
-export PATH="/usr/sbin:/usr/local/sbin:/sbin:${PATH_LOCAL}:${PATH_NODE_LOCAL}:${PATH_GO_LOCAL}:${PATH_DOOM}:${PATH}:${GOPATH}/bin"
+PATH_MYSQL="/usr/local/mysql/bin"
+export PATH="/usr/sbin:/usr/local/sbin:/sbin:${PATH_LOCAL}:${PATH_NODE_LOCAL}:${PATH_GO_LOCAL}:${PATH_PYTHON_LOCAL}:${PATH_DOOM}:${PATH_MYSQL}:${PATH}:${GOPATH}/bin:${KREW_ROOT:-$HOME/.krew}/bin:"
 export FPATH="/usr/share/zsh/site-contrib:${FPATH}"
 export GOPATH=$HOME/.local/go
 export EDITOR="vim"
-export BROWSER="chromium"
+export BROWSER="open"
+export LANG=en_US.UTF-8
 
 if [[ $UID != 0 ]]; then
-    if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-        export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-    fi
-    # export GPG_TTY=$(tty)
+    # if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    #     export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    # fi
     # unset SSH_AGENT_PID
-    # gpg-connect-agent updatestartuptty /bye >/dev/null
+
+    gpgconf --launch gpg-agent
+    export GPG_TTY="$(tty)"
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
 
+___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "${___MY_VMOPTIONS_SHELL_FILE}"; fi
+
+zle -N history-substring-search-up; zle -N history-substring-search-down
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
@@ -108,8 +149,6 @@ bindkey -M emacs '^N' history-substring-search-down
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-gpgconf --create-socketdir
 # -----------------------------------------------------------------------------"}}}
 
 #  < alias >{{{
@@ -145,37 +184,52 @@ alias proxychains='proxychains -q'
 
 alias aria2c='aria2c --no-conf=true'
 
-unalias fd
+alias crictl_k0s='crictl -r unix:///run/k0s/containerd.sock'
+
+alias sudo='sudo '
+
+# unalias fd
 # -----------------------------------------------------------------------------"}}}
 
-#  < spaceship >{{{
+#  < functions >{{{
 # -----------------------------------------------------------------------------
-# spaceship theme setting
-spaceship_rename_terminal_window() {
-  # Reset tmux pane title
-  printf '\033]2;%s\033\\' "${PWD/#$HOME/~}"
+function secret {
+  output="$(basename ${1}).$(date +%F).enc"
+  gpg --encrypt --armor \
+    --output ${output} \
+    -r 0xFC0DC147EE125054 \
+    "${1}" && echo "${1} -> ${output}"
+  # gpg --encrypt --armor -r 0xFC0DC147EE125054 ${1}
 }
 
-SPACESHIP_PROMPT_ORDER=(
-  rename_terminal_window
-  time
-  user
-  dir
-  host
-  git
-  exec_time
-  line_sep
-  jobs
-  exit_code
-  char
-)
+function reveal {
+  output=$(echo "${1}" | rev | cut -c16- | rev)
+  gpg --decrypt --output ${output} "${1}" \
+    && echo "${1} -> ${output}"
+}
 
-# SPACESHIP_CHAR_SYMBOL="❯ "
-# SPACESHIP_JOBS_SYMBOL="»"
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_USER_PREFIX="as "
-SPACESHIP_USER_SHOW="needed"
-SPACESHIP_DIR_TRUNC=0
-SPACESHIP_DIR_TRUNC_PREFIX=".../"
-SPACESHIP_DIR_TRUNC_REPO=false
+function sign {
+    gpg --clearsign -u 0xFC0DC147EE125054 ${1}
+}
+
+function detach_sign {
+    gpg --armor --detach-sign -u 0xFC0DC147EE125054 ${1}
+}
+
+function verify {
+    gpg --verify ${1}
+}
+
+function refresh_yubikey {
+    gpg-connect-agent "scd serialno" "learn --force" /bye
+}
+
+function gpg_restart {
+  pkill gpg
+  pkill pinentry
+  pkill ssh-agent
+  eval $(gpg-agent --daemon --enable-ssh-support)
+}
+
+# gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt
 # -----------------------------------------------------------------------------"}}}

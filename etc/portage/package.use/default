@@ -18,7 +18,7 @@ net-irc/hexchat libcanberra
 net-dns/avahi dbus
 net-misc/aria2 bittorrent -metalink
 net-misc/remmina ssh vnc rdp
-net-p2p/qbittorrent webui -X -dbus
+net-p2p/qbittorrent webui -X -gui -dbus
 dev-util/ctags json yaml
 dev-util/global vim
 dev-lang/python sqlite

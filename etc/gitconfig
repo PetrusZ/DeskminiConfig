@@ -15,9 +15,15 @@
 [user]
 	email = silencly07@gmail.com
 	name = Petrus.Z
-	signingkey = 71B321E14F898C3D
+	signingkey = 0xFC0DC147EE125054
 [pull]
-        ff = only
-        rebase = true
+  ff = only
+  rebase = true
 [commit]
 	gpgsign = true
+[safe]
+	directory = /var/db/repos/gentoo
+	directory = /var/db/repos/guru
+	directory = /var/db/repos/phoenix591
+	directory = /var/db/repos/ryans
+	directory = /var/db/repos/gig

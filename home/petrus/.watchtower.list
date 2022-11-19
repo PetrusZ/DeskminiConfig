@@ -7,4 +7,15 @@ emby
 jellyfin
 watchtower
 netdata
-postgres
+rsshub-rsshub-1
+rsshub-browserless-1
+ttrss
+mercury
+opencc
+ssl-exporter
+libvirt-exporter
+loki
+vector
+traffic_scraper
+tracing_scraper
+cadvisor

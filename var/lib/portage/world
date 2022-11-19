@@ -12,6 +12,7 @@ app-admin/sysstat
 app-arch/p7zip
 app-arch/rar
 app-benchmarks/sysbench
+app-containers/cri-tools
 app-containers/docker
 app-containers/docker-compose
 app-containers/k3d
@@ -45,15 +46,19 @@ app-text/dos2unix
 app-text/tree
 app-text/wgetpaste
 app-vim/nginx-syntax
+dev-db/etcd
 dev-db/mariadb
 dev-db/mycli
+dev-db/postgresql
 dev-db/redis
 dev-lang/php
 dev-php/pecl-redis
 dev-python/pip
 dev-util/ccache
 dev-util/pkgcheck
+dev-util/pkgdev
 dev-vcs/git
+dev-vcs/subversion
 mail-mta/postfix
 media-fonts/fontawesome
 media-fonts/hack
@@ -73,6 +78,7 @@ net-dns/avahi
 net-dns/bind-tools
 net-fs/nfs-utils
 net-fs/samba
+net-libs/nodejs
 net-misc/aria2
 net-misc/bridge-utils
 net-misc/iperf
@@ -99,6 +105,7 @@ sys-devel/gcc
 sys-fs/squashfs-tools
 sys-fs/zfs
 sys-fs/zfs-auto-snapshot
+sys-fs/zrepl
 sys-kernel/genkernel
 sys-kernel/gentoo-kernel-bin
 sys-power/acpi
@@ -108,5 +115,6 @@ sys-process/glances
 sys-process/htop
 sys-process/iotop
 sys-process/lsof
+www-apps/code-server-bin
 www-apps/nextcloud
 www-servers/nginx

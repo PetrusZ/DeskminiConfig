@@ -106,7 +106,7 @@ docker run \
   -p 3005:3005/tcp \
   -p 8324:8324/tcp \
   -p 32469:32469/tcp \
-  -p 1900:1900/udp \
+  -p 1901:1900/udp \
   -p 32410:32410/udp \
   -p 32412:32412/udp \
   -p 32413:32413/udp \
@@ -153,7 +153,7 @@ docker run -d \
  --device /dev/dri:/dev/dri \
  --net=host \
  --restart=always \
- jellyfin/jellyfin:unstable
+ jellyfin/jellyfin:latest
 
 docker run -d \
   --name elasticsearch \
@@ -210,6 +210,43 @@ docker run -d \
   -v /srv/data/postgres:/var/lib/postgresql/data \
   --restart=always \
   postgres:latest
+
+docker run -d \
+  --name code-server \
+  -p 8083:8080 \
+  -v "$HOME/.config:/home/coder/.config" \
+  -v "$HOME/.local/share:/home/coder/.local/share" \
+  -v "$HOME/Project:/home/coder/project" \
+  -u "$(id -u):$(id -g)" \
+  -e PASSWORD="" \
+  -e "DOCKER_USER=$USER" \
+  --restart=always \
+  codercom/code-server:latest
+
+docker run -d --name ssl-exporter -p 9219:9219 --restart=always ribbybibby/ssl-exporter:latest
+
+docker run -d --name libvirt-exporter -p 9177:9177 -v /var/run/libvirt:/var/run/libvirt --restart=always alekseizakharov/libvirt-exporter:latest
+
+docker run -d \
+  --name cadvisor \
+  -p 8085:8080 \
+  -v /:/rootfs:ro \
+  -v /var/run:/var/run:rw \
+  -v /sys:/sys:ro \
+  -v /var/lib/docker/:/var/lib/docker:ro \
+  -v /dev/disk/:/dev/disk:ro \
+  --restart=always \
+  gcr.io/cadvisor/cadvisor:latest --docker_only=true --housekeeping_interval=10s
+
+
+docker run -d \
+  --name qbittorrent-exporter \
+  -e QBITTORRENT_USERNAME= \
+  -e QBITTORRENT_PASSWORD= \
+  -e QBITTORRENT_BASE_URL=http://192.168.3.10:8082 \
+  -p 17871:17871 \
+  --restart=always \
+  caseyscarborough/qbittorrent-exporter:latest
 
 #sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org
 sudo acme.sh --issue --dns dns_cf -d *.codeplayer.org
