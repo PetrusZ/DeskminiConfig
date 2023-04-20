@@ -88,3 +88,22 @@
 # required by @selected
 # required by @world (argument)
 >=media-libs/libpulse-15.99.1-r1 X
+# required by www-servers/nginx-1.23.3::gentoo
+# required by @selected
+# required by @world (argument)
+>=app-misc/mime-types-2.1.53 nginx
+# required by gnome-base/gnome-keyring-42.1-r1::gentoo
+# required by virtual/secret-service-0::gentoo
+# required by app-crypt/libsecret-0.20.5-r3::gentoo
+# required by www-apps/code-server-bin-4.9.1-r1::guru
+# required by @selected
+# required by @world (argument)
+>=app-crypt/gcr-3.41.1-r2:0 gtk
+# required by x11-libs/gtk+-3.24.37::gentoo
+# required by x11-themes/adwaita-icon-theme-43_p1::gentoo
+>=x11-libs/cairo-1.17.8 X
+# required by media-libs/mesa-23.0.0-r1::gentoo[-video_cards_radeon,-video_cards_r600,video_cards_radeonsi,-video_cards_r300]
+# required by media-libs/libepoxy-1.5.10-r1::gentoo[egl]
+# required by x11-libs/gtk+-3.24.37::gentoo
+# required by x11-themes/adwaita-icon-theme-43_p1::gentoo
+>=x11-libs/libdrm-2.4.115 video_cards_radeon

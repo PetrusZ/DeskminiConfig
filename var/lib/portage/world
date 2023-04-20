@@ -5,6 +5,7 @@ app-admin/cockpit-machines
 app-admin/cockpit-navigator
 app-admin/cockpit-zfs-manager
 app-admin/eclean-kernel
+app-admin/helm
 app-admin/logrotate
 app-admin/sudo
 app-admin/syslog-ng

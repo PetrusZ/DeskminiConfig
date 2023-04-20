@@ -87,10 +87,10 @@ zinit light starship/starship
 
 # User configuration
 if [[ $UID != 0 ]]; then
-    PATH_LOCAL="/Users/petrus/.local/bin"
-    PATH_NODE_LOCAL="/Users/petrus/.local/node_modules/.bin"
-    PATH_GO_LOCAL="/Users/petrus/.local/go/bin"
-    PATH_PYTHON_LOCAL="/Users/petrus/Library/Python/3.10/bin/"
+    PATH_LOCAL="/home/petrus/.local/bin"
+    PATH_NODE_LOCAL="/home/petrus/.local/node_modules/.bin"
+    PATH_GO_LOCAL="/home/petrus/.local/go/bin"
+    PATH_PYTHON_LOCAL="/home/petrus/Library/Python/3.10/bin/"
 fi
 PATH_DISTCC="/usr/lib/distcc/bin"
 PATH_DOOM="/home/petrus/.emacs.d/bin"
@@ -108,9 +108,10 @@ if [[ $UID != 0 ]]; then
     # fi
     # unset SSH_AGENT_PID
 
-    gpgconf --launch gpg-agent
-    export GPG_TTY="$(tty)"
+    # gpgconf --launch gpg-agent
+    # export GPG_TTY="$(tty)"
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    # gpg-connect-agent UPDATESTARTUPTTY /bye
 fi
 
 ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "${___MY_VMOPTIONS_SHELL_FILE}"; fi
@@ -229,6 +230,10 @@ function gpg_restart {
   pkill pinentry
   pkill ssh-agent
   eval $(gpg-agent --daemon --enable-ssh-support)
+}
+
+function gpg_agent_reload {
+    gpg-connect-agent reloadagent /bye
 }
 
 # gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt

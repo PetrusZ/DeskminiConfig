@@ -248,6 +248,15 @@ docker run -d \
   --restart=always \
   caseyscarborough/qbittorrent-exporter:latest
 
+docker run -d \
+  --name twitter-media-scraper \
+  -v /srv/data/nas/adult/twitter-media-scraper/out:/cmd/out \
+  -v /srv/data/nas/adult/twitter-media-scraper/configs:/cmd/configs \
+  -v /etc/timezone:/etc/timezone:ro \
+  -v /etc/localtime:/etc/localtime:ro \
+  --restart=always \
+  patrickz07/twitter-media-scraper:latest
+
 #sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org
 sudo acme.sh --issue --dns dns_cf -d *.codeplayer.org
 sudo acme.sh --install-cert -d codeplayer.org --key-file /etc/nginx/key.pem --fullchain-file /etc/nginx/fullchain.pem --reloadcmd "systemctl reload nginx"
