@@ -257,6 +257,19 @@ docker run -d \
   --restart=always \
   patrickz07/twitter-media-scraper:latest
 
+docker run -d -p 8090:8080 -p 8086:8086 \
+  -v /srv/data/scrutiny/config:/opt/scrutiny/config \
+  -v /srv/data/scrutiny/influxdb2:/opt/scrutiny/influxdb \
+  -v /run/udev:/run/udev:ro \
+  --cap-add SYS_RAWIO \
+  --cap-add SYS_ADMIN \
+  --device=/dev/sda \
+  --device=/dev/sdb \
+  --device=/dev/nvme0 \
+  --name scrutiny \
+  --restart=always \
+  ghcr.io/analogj/scrutiny:master-omnibus
+
 #sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --dns-cloudflare-propagation-seconds 60  -d *.codeplayer.org
 sudo acme.sh --issue --dns dns_cf -d *.codeplayer.org
 sudo acme.sh --install-cert -d codeplayer.org --key-file /etc/nginx/key.pem --fullchain-file /etc/nginx/fullchain.pem --reloadcmd "systemctl reload nginx"
